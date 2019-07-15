@@ -93,3 +93,11 @@ def saveResult(save_path,npyfile,flag_multi_class = False,num_class = 2):
     for i,item in enumerate(npyfile):
         img = labelVisualize(num_class,COLOR_DICT,item) if flag_multi_class else item[:,:,0]
         io.imsave(os.path.join(save_path,"%d_predict.png"%i),img)
+
+def classify(npyfile,classnum):
+    l=len(npyfile.shape)
+    transfile=np.zeros(npyfile.shape[:l-1]+(1,))
+    for img,imgnpy in zip(transfile,npyfile):
+        img[:,:,0]=np.argmax(imgnpy,axis=2)
+
+    return transfile

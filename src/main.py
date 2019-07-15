@@ -3,6 +3,7 @@ from data import *
 from visualize import *
 from utils import *
 import SimpleITK as sitk
+from keras.utils import to_categorical
 
 datagen=ImageDataGenerator(rotation_range=0.2,
                            width_shift_range=0.05,
@@ -23,6 +24,7 @@ img=np.transpose(img)
 seg=np.transpose(seg)
 img=img[:,:,:,np.newaxis]
 seg=seg[:,:,:,np.newaxis]
+seg=to_categorical(seg)
 
 model=unet()
 model_checkpoint=ModelCheckpoint('unet.hdf5', monitor='loss',verbose=1, save_best_only=True)
